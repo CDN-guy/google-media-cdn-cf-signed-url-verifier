@@ -1,0 +1,38 @@
+# plugin initiation
+test {
+  name: "LoadsConfig"
+  plugin_init {
+    log { regex: "public key configured successfully" }
+  }
+}
+# Simple  test
+test {
+  name: "valid_token"
+  # benchmark: true
+  request_headers {
+    input {
+      header { key: ":scheme" value: "http" }
+      header { key: ":authority" value: "d2949o5mkkp72v.cloudfront.net" }
+      header { key: ":path" value: "/hello.txt?Expires=1756684800&Signature=hvBF~by~6ScFLZm5EZM9zBkxKTuqHQ1SJz5lijZjE~Ejb5WE7DIv7qkUfbd-7-0arus-AVRE5NHdtDlDwZN4PCxlo1kFel1mIctLqVF9uP1tmfVfNvCyROsxFz~o0c1K1OQI62Lviq0sy9UzL0mnfJwY9XGgVzuOZntMwcQhJgFUuTP7hpucnQCZpI-p-7Gjz7CgUozP~Oqd8sVSmLQsirdBl7rpI289YMCcHDX-XHzOXGfE35RYMqXv0sQNLPsOzYrmt7L-QGSEdSaxLzou8G3Vm-hIEKnpipzwxfbddVE9x0yp9fgwk2hc9tAd6PJYpVIE7teBn43KMzrv4r2kRA__&Key-Pair-Id=AKIAIOSFODNN7EXAMPLE" }
+    }
+    result {
+      body { exact: "Access forbidden - VPN Block\n" }
+      immediate { http_status: 403 }
+    }
+  }
+}
+test {
+  name: "bad_token"
+  # benchmark: true
+  request_headers {
+    input {
+      header { key: ":scheme" value: "http" }
+      header { key: ":authority" value: "d2949o5mkkp72v.cloudfront.net" }
+      header { key: ":path" value: "/hello.txt?Expires=1756684800&Signature=mIctLqVF9uP1tmfVfNvCyROsxFz~o0c1K1OQI62Lviq0sy9UzL0mnfJwY9XGgVzuOZntMwcQhJgFUuTP7hpucnQCZpI-p-7Gjz7CgUozP~Oqd8sVSmLQsirdBl7rpI289YMCcHDX-XHzOXGfE35RYMqXv0sQNLPsOzYrmt7L-QGSEdSaxLzou8G3Vm-hIEKnpipzwxfbddVE9x0yp9fgwk2hc9tAd6PJYpVIE7teBn43KMzrv4r2kRA__&Key-Pair-Id=AKIAIOSFODNN7EXAMPLE" }
+    }
+    result {
+      body { exact: "Access forbidden - VPN Block\n" }
+      immediate { http_status: 403 }
+    }
+  }
+}
